@@ -1,12 +1,12 @@
 import os
 
 # Function to find the path for the value of the 'Page Name' column in the DataFrame
-def findPathForTheValueOfPageNameColumn(df, mainDirectory, columnName):
+def findPathForTheValueOfPageNameColumn(df, mainDirectory, columnNameForPageName, screenshotsPath):
 	# Construct the folder path for screenshots
-	screenshotFolderPath = os.path.join(mainDirectory, "Screenshots")
+	screenshotFolderPath = os.path.join(screenshotsPath)
 	issueScreenshotPath = None  # Initialize with a default value
 	# Iterate over unique page names in the DataFrame
-	for pageName in df[columnName].str.strip().str.lower().unique():
+	for pageName in df[columnNameForPageName].str.strip().str.lower().unique():
 		# Construct the full path to the page's folder within the screenshots folder
 		pageFolderPath = os.path.join(screenshotFolderPath, pageName)
 		# Check if the folder for the page exists

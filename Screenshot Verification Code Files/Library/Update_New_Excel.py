@@ -5,20 +5,20 @@ from Library import Find_Path
 from Library import Match_Screenshot
 
 # Function to update the DataFrame with screenshot status and save it to a new Excel file
-def updatingDFAndCreatingNewExcelSheet(df, mainDirectory, columnName):
+def updatingDFAndCreatingNewExcelSheet(df, mainDirectory, columnNameForPageName, screenshotsPath, columnNameForScreenshotName):
 	# Specify the path for the text file
-	txtFilePath = os.path.join(mainDirectory, "Reports", "Extra_Screenshots.txt")
+	txtFilePath = os.path.join(mainDirectory, "Extra_Screenshots.txt")
 	# Open the text file in write mode
 	with open(txtFilePath, 'w') as txtFile:
 		# Iterate over unique page names in the DataFrame
-		for pageName in df[columnName].str.strip().str.lower().unique():
+		for pageName in df[columnNameForPageName].str.strip().str.lower().unique():
 			# Filter rows for the current page name
-			pageRows = df[df[columnName].str.strip().str.lower() == pageName]
+			pageRows = df[df[columnNameForPageName].str.strip().str.lower() == pageName]
 			# Find the path for the current page name by calling findPath... function.
-			issueScreenshotPath = Find_Path.findPathForTheValueOfPageNameColumn(pageRows, mainDirectory,columnName)
+			issueScreenshotPath = Find_Path.findPathForTheValueOfPageNameColumn(pageRows, mainDirectory, columnNameForPageName, screenshotsPath)
 			# Check for matching files in the issue screenshot path with those in the DataFrame 
 			# By calling matchingScreenshot... function
-			screenshotStatus = Match_Screenshot.matchingFilesInIssueScreenshotPathWithIssueScreenshot(pageRows, issueScreenshotPath)
+			screenshotStatus = Match_Screenshot.matchingFilesInIssueScreenshotPathWithIssueScreenshot(pageRows, issueScreenshotPath, columnNameForScreenshotName)
 
 			df.loc[pageRows.index, "Screenshot status"] = screenshotStatus
 			
@@ -26,7 +26,7 @@ def updatingDFAndCreatingNewExcelSheet(df, mainDirectory, columnName):
 			screenshotsInDirectory = [os.path.splitext(f)[0].lower() for f in os.listdir(issueScreenshotPath) if f.lower().endswith('.png')]
 
 			# Get the list of screenshots mentioned in the DataFrame for this page
-			screenshotsInDF = pageRows['Issue Screenshot'].str.strip().str.lower().tolist()
+			screenshotsInDF = pageRows[columnNameForScreenshotName].str.strip().str.lower().tolist()
 			
 			# Calculate extra screenshots
 			extraScreenshots = [screenshot for screenshot in screenshotsInDirectory if screenshot not in screenshotsInDF]
@@ -42,7 +42,7 @@ def updatingDFAndCreatingNewExcelSheet(df, mainDirectory, columnName):
 	print("Extra_Screenshots text file is created")
  
 	# Specify the path for the new Excel file with the added columns
-	newExcelFilePath = os.path.join(r"D:\sandhya\TekVision\Sample", "Reports", "Screenshot_verification.xlsx")
+	newExcelFilePath = os.path.join(mainDirectory, "Screenshot_verification.xlsx")
 	# Check if the file exists
 	if os.path.exists(newExcelFilePath):
 		# If the file exists, load it, update with the new DataFrame, and save it back
