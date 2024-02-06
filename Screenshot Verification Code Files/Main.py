@@ -1,35 +1,10 @@
 import os
 import pandas as pd
-
+from Library.Read_Input_Details import readInputDetails
 from Library import Install_Required_Python_Modules
 from Library import Read_Excel
 from Library import Validate_User_Input
 from Library import Update_New_Excel
-
-def readInputDetails(filePath):
-	details = {}
-	try:
-		with open(filePath, 'r') as file:
-			for line in file:
-				# Split each line into key-value pairs using ':-' as delimiter
-				parts = line.strip().split(':-')
-				if len(parts) == 2:
-					key = parts[0].strip()
-					value = parts[1].strip()
-					# Ensure that key and value are not empty
-					if key and value:
-						details[key] = value
-					else:
-						print("Warning: Empty key or value found in input file.")
-				else:
-					print(f"Error: Invalid line format in input file: '{line.strip()}'")
-	except FileNotFoundError:
-		print(f"Error: Input details file '{filePath}' not found.")
-	except Exception as e:
-		print(f"Error while reading input file: {e}")
-	
-	return details
-
 
 def main():
 	inputFilePath = "Input_Details.txt"
@@ -41,6 +16,29 @@ def main():
 
 	# Read input details from file
 	details = readInputDetails(inputFilePath)
+
+	# Check if any key is missing
+	requiredKeys = [
+		"Path where excel sheet stored",
+		"Name of final excel sheet (Without extension)",
+		"Column name for page/component name",
+		"Column name for screenshot name",
+		"path where screenshots folder located"
+	]
+
+	for key in requiredKeys:
+		if key not in details:
+			print(f"Missing key '{key}' in input file.")
+			print("Exiting program.")
+			return
+
+	# Check for missing values
+	missingValues = [key for key, value in details.items() if not value]
+	if missingValues:
+		for key in missingValues:
+			print(f"Missing value for key '{key}' in input file.")
+		print("Exiting program.")
+		return
 
 	mainDirectory = details.get("Path where excel sheet stored").strip('"').strip()
 	finalExcelSheet = details.get("Name of final excel sheet (Without extension)").strip()
