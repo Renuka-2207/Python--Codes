@@ -1,5 +1,5 @@
 Path where excel sheet stored:- "D:\sandhya\TekVision\Sample\Reports" 
-Name of final excel sheet (Without extension):- OneGoalGraduation_Accessibility_report_01-24-2024
+Name of final excel sheet (With extension):- OneGoalGraduation_Accessibility_report_01-24-2024.xlsx
 Column name for page/component name:- Page Name
 Column name for screenshot name:- Issue Screenshot
 path where screenshots folder located:- D:\sandhya\TekVision\Sample\Screenshots

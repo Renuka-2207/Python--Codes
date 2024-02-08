@@ -11,7 +11,7 @@ def validateMainDirectory(mainDirectory):
 
 # Validation function for final excel sheet
 def validateFinalExcelSheet(mainDirectory, finalExcelSheet):
-	excelFilePath = os.path.join(mainDirectory, finalExcelSheet + ".xlsx")
+	excelFilePath = os.path.join(mainDirectory, finalExcelSheet)
 	if not os.path.isfile(excelFilePath):
 		print(f"Error: The specified Excel sheet '{finalExcelSheet}' does not exist in the directory.")
 		return False

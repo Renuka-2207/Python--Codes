@@ -20,7 +20,7 @@ def main():
 	# Check if any key is missing
 	requiredKeys = [
 		"Path where excel sheet stored",
-		"Name of final excel sheet (Without extension)",
+		"Name of final excel sheet (With extension)",
 		"Column name for page/component name",
 		"Column name for screenshot name",
 		"path where screenshots folder located"
@@ -41,7 +41,7 @@ def main():
 		return
 
 	mainDirectory = details.get("Path where excel sheet stored").strip('"').strip()
-	finalExcelSheet = details.get("Name of final excel sheet (Without extension)").strip()
+	finalExcelSheet = details.get("Name of final excel sheet (With extension)").strip()
 	columnNameForPageName = details.get("Column name for page/component name").lower().strip()
 	columnNameForScreenshotName = details.get("Column name for screenshot name").lower().strip()
 	screenshotsPath = details.get("path where screenshots folder located").strip('"')
