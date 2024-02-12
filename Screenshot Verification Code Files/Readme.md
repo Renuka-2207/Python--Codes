@@ -43,3 +43,14 @@ G. Run the script by executing the command: `python main.py`
 ## 5. Known issues:
 
 - None reported at this time.
+
+## 6
+
+Important Note:
+Consider a scenario where a screenshot of the respective issue is already present, but the screenshot name does not exactly match the name mentioned in the "Issue Screenshot" column of the Excel file. For example:
+- Screenshot name: 4.1.2-missing button role
+- Name mentioned in the Excel: 4.1.2 - missing button role
+Although the names may appear similar, there could be slight differences, such as trailing spaces before and after the dash (-). In such cases, the script will flag two issues:
+I. Screenshot missing
+II. Extra screenshot
+It's crucial to exercise caution in such scenarios. Additionally, we believe this check is vital for excel based projects, where we must ensure that names in both places are identical.
